@@ -20,6 +20,7 @@ func NewUserRepository(db *sql.DB) UserRepository {
 	}
 }
 
+// Create untuk input user ke database
 func (u *userRepositoryImpl) Create(ctx context.Context, user *models.User) error {
 	query := "INSERT INTO users (name, email, password, timezone) VALUES (?, ?, ?, ?)"
 
@@ -43,6 +44,7 @@ func (u *userRepositoryImpl) Create(ctx context.Context, user *models.User) erro
 	return nil
 }
 
+// GetByID untuk mendapatkan user berdasarkan ID
 func (u *userRepositoryImpl) GetByID(ctx context.Context, id int) (*models.User, error) {
 	user := &models.User{}
 
@@ -59,6 +61,7 @@ func (u *userRepositoryImpl) GetByID(ctx context.Context, id int) (*models.User,
 	return user, nil
 }
 
+// GetByEmail untuk mendapatkan user berdasarkan email
 func (u *userRepositoryImpl) GetByEmail(ctx context.Context, email string) (*models.User, error) {
 	user := &models.User{}
 
@@ -75,6 +78,7 @@ func (u *userRepositoryImpl) GetByEmail(ctx context.Context, email string) (*mod
 	return user, nil
 }
 
+// Update untuk mengubah nama dan timezone
 func (u *userRepositoryImpl) Update(ctx context.Context, user *models.User) error {
 	query := "UPDATE users SET name = ?, timezone = ? WHERE id = ?"
 
@@ -86,6 +90,7 @@ func (u *userRepositoryImpl) Update(ctx context.Context, user *models.User) erro
 	return nil
 }
 
+// Delete untuk menghapus user yang ada di database
 func (u *userRepositoryImpl) Delete(ctx context.Context, id int) error {
 	query := "DELETE FROM users WHERE id = ?"
 
