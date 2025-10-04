@@ -14,6 +14,3 @@ CREATE TABLE IF NOT EXISTS capsules (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
-
-CREATE INDEX idx_capsules_user_id ON capsules(user_id);
-CREATE INDEX idx_capsules_due_status ON capsules(due_date, status);
