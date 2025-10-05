@@ -38,3 +38,14 @@ type UserResponse struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdateAt  time.Time `json:"update_at"`
 }
+
+func (u *User) ToResponse() *UserResponse {
+	return &UserResponse{
+		ID:        u.ID,
+		Name:      u.Name,
+		Email:     u.Email,
+		Timezone:  u.Timezone,
+		CreatedAt: u.CreatedAt,
+		UpdateAt:  u.UpdateAt,
+	}
+}
