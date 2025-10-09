@@ -173,6 +173,7 @@ func (s *capsuleService) GetPendingForToday(ctx context.Context) ([]models.Capsu
 	return s.capsuleRepo.GetPendingForToday(ctx)
 }
 
+// Method ini dipanggil setelah email berhasil dikirim
 func (s *capsuleService) MarkCapsulesAsSent(ctx context.Context, capsuleID int) error {
 	return s.capsuleRepo.MarkAsSent(ctx, capsuleID)
 }
