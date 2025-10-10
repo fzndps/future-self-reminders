@@ -4,7 +4,7 @@ package repository
 import (
 	"context"
 
-	models "future-letter/internal/models/capsule"
+	"future-letter/internal/models"
 )
 
 type CapsuleRepository interface {

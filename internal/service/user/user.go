@@ -4,7 +4,7 @@ package service
 import (
 	"context"
 
-	models "future-letter/internal/models/user"
+	"future-letter/internal/models"
 )
 
 type UserService interface {

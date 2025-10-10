@@ -4,7 +4,7 @@ package handler
 import (
 	"future-letter/internal/config"
 	"future-letter/internal/middleware"
-	models "future-letter/internal/models/user"
+	"future-letter/internal/models"
 	service "future-letter/internal/service/user"
 	"future-letter/internal/utils"
 

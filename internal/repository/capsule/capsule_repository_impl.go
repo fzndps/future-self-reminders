@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 
-	models "future-letter/internal/models/capsule"
+	"future-letter/internal/models"
 )
 
 type capsuleRepository struct {

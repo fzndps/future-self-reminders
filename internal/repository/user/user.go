@@ -4,7 +4,7 @@ package repository
 import (
 	"context"
 
-	models "future-letter/internal/models/user"
+	"future-letter/internal/models"
 )
 
 type UserRepository interface {

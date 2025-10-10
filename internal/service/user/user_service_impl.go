@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 
-	models "future-letter/internal/models/user"
+	"future-letter/internal/models"
 	repository "future-letter/internal/repository/user"
 
 	"golang.org/x/crypto/bcrypt"

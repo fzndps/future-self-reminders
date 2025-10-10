@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"time"
 
-	models "future-letter/internal/models/capsule"
+	"future-letter/internal/models"
 	repository "future-letter/internal/repository/capsule"
 )
 

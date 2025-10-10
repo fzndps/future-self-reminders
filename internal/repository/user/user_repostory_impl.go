@@ -7,7 +7,7 @@ import (
 	"errors"
 	"fmt"
 
-	models "future-letter/internal/models/user"
+	"future-letter/internal/models"
 )
 
 type userRepositoryImpl struct {
