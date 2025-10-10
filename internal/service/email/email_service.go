@@ -40,6 +40,7 @@ func (s *EmailService) SendCapsuleEmail(user *models.User, capsule *models.Capsu
 		s.cfg.Email.SMTPHost,
 	)
 
+	// Mmembuat message
 	message := []byte(
 		"From: " + s.cfg.Email.SMTPFrom + "\r\n" +
 			"To: " + user.Email + "\r\n" +
