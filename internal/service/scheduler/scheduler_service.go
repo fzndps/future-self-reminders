@@ -19,6 +19,7 @@ import (
 type SchedulerService interface {
 	Start() error
 	Stop()
+	RunManually()
 }
 
 // schedulerService struct implementation
@@ -111,7 +112,7 @@ func (s *schedulerService) processPendingCapsules() {
 	defer cancel()
 
 	// GetPendingForToday mendapat capsule yang pending pada hari ini
-	capsules, err := s.capsuleService.GetPendingForToday(ctx)
+	capsules, err := s.capsuleService.GetPendingCapsulesForToday(ctx)
 	if err != nil {
 		log.Printf("Failed to get pending capsules: %v", err)
 		return

@@ -31,8 +31,14 @@ func (s *capsuleService) CreateCapsule(ctx context.Context, userID int, input *m
 		return nil, errors.New("invalid format date, use YYYY-MM-DD")
 	}
 
+	now := time.Now()
+
+	// Jika due date == hari ini, set jadi beberapa menit ke depan agar valid
+	if dueDate.Format("2006-01-02") == now.Format("2006-01-02") {
+		dueDate = now.Add(10 * time.Minute)
+	}
 	// Memastika due date di masa depan
-	if dueDate.Before(time.Now()) {
+	if dueDate.Before(now) {
 		return nil, errors.New("due date must be in the future")
 	}
 
@@ -169,7 +175,7 @@ func (s *capsuleService) DeleteCapsule(ctx context.Context, capsuleID, userID in
 }
 
 // Method ini akan digunakan oleh schedular
-func (s *capsuleService) GetPendingForToday(ctx context.Context) ([]models.Capsule, error) {
+func (s *capsuleService) GetPendingCapsulesForToday(ctx context.Context) ([]models.Capsule, error) {
 	return s.capsuleRepo.GetPendingForToday(ctx)
 }
 

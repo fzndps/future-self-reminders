@@ -147,7 +147,7 @@ func (r *capsuleRepository) GetPendingForToday(ctx context.Context) ([]models.Ca
 		SELECT id, user_id, title, message, due_date, delivery_method,
 			status, category, mood, image_url, sent_at, created_at, updated_at
 		FROM capsules
-		WHERE DATE(due_date) = CUREDATE() AND status = 'pending'
+		WHERE DATE(due_date) = CURDATE() AND status = 'pending'
 		ORDER BY created_at ASC
 	`
 

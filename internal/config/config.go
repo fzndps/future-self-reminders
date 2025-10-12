@@ -41,7 +41,7 @@ type JWTConfig struct {
 // EmailConfig menampung konfigurasi email SMTP
 type EmailConfig struct {
 	SMTPHost     string
-	SMTPPort     string
+	SMTPPort     int
 	SMTPUsername string
 	SMTPPassword string
 	SMTPFrom     string
@@ -79,7 +79,7 @@ func LoadConfig() (*Config, error) {
 
 		Email: EmailConfig{
 			SMTPHost:     os.Getenv("SMTP_HOST"),
-			SMTPPort:     os.Getenv("SMTP_PORT"),
+			SMTPPort:     getENVasInt("SMTP_PORT", 587),
 			SMTPUsername: os.Getenv("SMTP_USERNAME"),
 			SMTPPassword: os.Getenv("SMTP_PASSWORD"),
 			SMTPFrom:     os.Getenv("SMTP_FROM"),

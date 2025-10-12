@@ -13,6 +13,6 @@ type CapsuleService interface {
 	GetUserCapsule(ctx context.Context, userID int) ([]models.Capsule, error)
 	UpdateCapsule(ctx context.Context, capsuleID, userID int, input *models.UpdateCapsuleInput) (*models.Capsule, error)
 	DeleteCapsule(ctx context.Context, capsuleID, userID int) error
-	GetPendingForToday(ctx context.Context) ([]models.Capsule, error)
+	GetPendingCapsulesForToday(ctx context.Context) ([]models.Capsule, error)
 	MarkCapsulesAsSent(ctx context.Context, capsuleID int) error
 }

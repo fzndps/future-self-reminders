@@ -46,12 +46,12 @@ func (s *EmailService) SendCapsuleEmail(user *models.User, capsule *models.Capsu
 			"To: " + user.Email + "\r\n" +
 			"Subject: " + subject + "\r\n" +
 			"MIME-Version: 1.0\r\n" +
-			"Content-Type: Text/html; charset=UTF-8\r\n" +
+			"Content-Type: text/html; charset=UTF-8\r\n" +
 			"\r\n" +
 			body + "\r\n",
 	)
 
-	addr := fmt.Sprintf("%s:%s", s.cfg.Email.SMTPHost, s.cfg.Email.SMTPPort)
+	addr := fmt.Sprintf("%s:%d", s.cfg.Email.SMTPHost, s.cfg.Email.SMTPPort)
 	err := smtp.SendMail(
 		addr,
 		auth,
@@ -87,8 +87,8 @@ func (s *EmailService) comploseEmailBody(user *models.User, capsule *models.Caps
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
     <!-- Header -->
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-        <h1 style="color: white; margin: 0; font-size: 28px;">⏰ Your Time Capsule Has Arrived!</h1>
+    <div style="background: linear-gradient(135deg, #667eea 0%%, #764ba2 100%%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+        <h1 style="color: black; margin: 0; font-size: 28px;">⏰ Your Time Capsule Has Arrived!</h1>
     </div>
     
     <!-- Content -->
@@ -144,15 +144,20 @@ func (s *EmailService) comploseEmailBody(user *models.User, capsule *models.Caps
 </html>
 `
 
+	name := escapeHTML(user.Name)
+	name = strings.ReplaceAll(name, "%", "%%")
 	// Replace placeholder dengan data sebenarnya
-	html = fmt.Sprintf(html,
-		escapeHTML(user.Name),
+	html = fmt.Sprintf(
+		html,
+		name,
 		capsule.CreatedAt.Format("January 2, 2006"),
 		escapeHTML(capsule.Title),
 		escapeHTML(capsule.Message),
 		escapeHTML(category),
 		escapeHTML(mood),
-		capsule.CreatedAt.Format("January 1, 2006 at 3:04 PM"),
+		capsule.CreatedAt.Format("January 2, 2006 at 3:04 PM"),
+		escapeHTML(mood),
+		escapeHTML(category),
 	)
 
 	return html
@@ -186,12 +191,12 @@ func (s *EmailService) SendTestEmail(toEmail string) error {
 			"To: " + toEmail + "\r\n" +
 			"Subject: " + subject + "\r\n" +
 			"MIME-Version: 1.0\r\n" +
-			"Content-Type: Text/html; charset=UTF-8\r\n" +
+			"Content-Type: text/html; charset=UTF-8\r\n" +
 			"\r\n" +
 			body + "\r\n",
 	)
 
-	addr := fmt.Sprintf("%s:%s", s.cfg.Email.SMTPHost, s.cfg.Email.SMTPPort)
+	addr := fmt.Sprintf("%s:%d", s.cfg.Email.SMTPHost, s.cfg.Email.SMTPPort)
 	err := smtp.SendMail(
 		addr,
 		auth,
@@ -213,7 +218,7 @@ func escapeHTML(s string) string {
 		"<":  "&lt;",
 		">":  "&gt;",
 		"\"": "&quot;",
-		"'":  "&#39",
+		"'":  "&#39;",
 	}
 
 	// Replace semua karakter spesial
@@ -227,15 +232,15 @@ func escapeHTML(s string) string {
 func (s *EmailService) SendWelcomeEmail(user *models.User) error {
 	subject := "Welcome to Future Self Reminders"
 
-	body := fmt.Sprintf(`
+	html := `
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
 </head>
 <body style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;">
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px;">
-        <h1 style="color: white; margin: 0;">Welcome to Future Self Reminders! 🎉</h1>
+    <div style="background: linear-gradient(135deg, #667eea 0%%, #764ba2 100%%); padding: 30px; text-align: center; border-radius: 10px;">
+        <h1 style="color: black; margin: 0;">Welcome to Future Self Reminders! 🎉</h1>
     </div>
     
     <div style="padding: 30px; background: #f9f9f9; border-radius: 0 0 10px 10px;">
@@ -260,20 +265,28 @@ func (s *EmailService) SendWelcomeEmail(user *models.User) error {
     </div>
 </body>
 </html>
-`, escapeHTML(user.Name))
+`
 
+	name := escapeHTML(user.Name)
+	name = strings.ReplaceAll(name, "%", "%%")
+	html = fmt.Sprintf(
+		html,
+		// escapeHTML(user.Email),
+		escapeHTML(name),
+	)
+	fmt.Println("DEBUG FORMATTED HTML:\n", html)
 	auth := smtp.PlainAuth("", s.cfg.Email.SMTPUsername, s.cfg.Email.SMTPPassword, s.cfg.Email.SMTPHost)
 	message := []byte(
 		"From: " + s.cfg.Email.SMTPFrom + "\r\n" +
 			"To: " + user.Email + "\r\n" +
 			"Subject: " + subject + "\r\n" +
 			"MIME-Version: 1.0\r\n" +
-			"Content-Type: Text/html; charset=UTF-8\r\n" +
+			"Content-Type: text/html; charset=UTF-8\r\n" +
 			"\r\n" +
-			body + "\r\n",
+			html + "\r\n",
 	)
 
-	addr := fmt.Sprintf("%s:%s", s.cfg.Email.SMTPHost, s.cfg.Email.SMTPPort)
+	addr := fmt.Sprintf("%s:%d", s.cfg.Email.SMTPHost, s.cfg.Email.SMTPPort)
 	err := smtp.SendMail(addr, auth, s.cfg.Email.SMTPFrom, []string{user.Email}, message)
 	if err != nil {
 		// Tidak mereturn error karena registrasi tetap berhasil walau welcome email gagal
