@@ -66,8 +66,8 @@ func main() {
 	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
 	registerInput := &models.RegisterInput{
-		Name:     "Scheduler Test User",
-		Email:    "fizonenda18@gmail.com", // Kirim ke email kita sendiri
+		Name:     "Khabib test user",
+		Email:    "mkhabib47@gmail.com", // Kirim ke email kita sendiri
 		Password: "password123",
 		Timezone: "Asia/Jakarta",
 	}

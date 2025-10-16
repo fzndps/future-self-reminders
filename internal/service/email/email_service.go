@@ -274,7 +274,6 @@ func (s *EmailService) SendWelcomeEmail(user *models.User) error {
 		// escapeHTML(user.Email),
 		escapeHTML(name),
 	)
-	fmt.Println("DEBUG FORMATTED HTML:\n", html)
 	auth := smtp.PlainAuth("", s.cfg.Email.SMTPUsername, s.cfg.Email.SMTPPassword, s.cfg.Email.SMTPHost)
 	message := []byte(
 		"From: " + s.cfg.Email.SMTPFrom + "\r\n" +

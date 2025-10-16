@@ -52,7 +52,7 @@ func main() {
 	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
 	// Ganti dengan email kamu untuk testing
-	testEmail := "fizonenda18@gmail.com" // Kirim ke diri sendiri
+	testEmail := "mkhabib47@gmail.com" // Kirim ke diri sendiri
 
 	fmt.Printf("📤 Sending test email to: %s\n", testEmail)
 	err = emailService.SendTestEmail(testEmail)
@@ -78,7 +78,7 @@ func main() {
 	// Buat dummy user untuk testing
 	dummyUser := &models.User{
 		ID:       1,
-		Name:     "John Doe",
+		Name:     "khabib",
 		Email:    testEmail,
 		Timezone: "Asia/Jakarta",
 	}

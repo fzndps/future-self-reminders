@@ -71,7 +71,7 @@ func (s *schedulerService) Start() error {
 		// Fungsi akan dijalankan sesuai cron expression
 		log.Println("Schedular running: checking pending capsuless...")
 
-		// jalankan job untuk kirtim capsules
+		// jalankan job untuk kirim capsules
 		s.processPendingCapsules()
 	})
 	if err != nil {
