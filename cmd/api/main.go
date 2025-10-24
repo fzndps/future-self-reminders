@@ -49,9 +49,9 @@ func main() {
 	capsuleRepo := capsuleRepository.NewCapsuleRepository(database.DB)
 
 	// Initalize service
-	userSvc := userService.NewUserService(userRepo)
-	capsuleSvc := capsuleService.NewCapsuleService(capsuleRepo)
 	emailSvc := emailService.NewEmailService(cfg)
+	userSvc := userService.NewUserService(userRepo, emailSvc)
+	capsuleSvc := capsuleService.NewCapsuleService(capsuleRepo)
 
 	// Scheduler service
 	schedulerSvc := schedulerService.NewSchedulerService(cfg, userRepo, capsuleSvc, emailSvc)

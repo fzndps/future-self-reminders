@@ -5,20 +5,24 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 
 	"future-letter/internal/models"
 	repository "future-letter/internal/repository/user"
+	service "future-letter/internal/service/email"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
 type userService struct {
-	userRepo repository.UserRepository
+	userRepo     repository.UserRepository
+	emailService *service.EmailService
 }
 
-func NewUserService(userRepo repository.UserRepository) UserService {
+func NewUserService(userRepo repository.UserRepository, emailService *service.EmailService) UserService {
 	return &userService{
-		userRepo: userRepo,
+		userRepo:     userRepo,
+		emailService: emailService,
 	}
 }
 
@@ -61,6 +65,16 @@ func (s *userService) Register(ctx context.Context, input *models.RegisterInput)
 	if err != nil {
 		return nil, fmt.Errorf("something went wrong: %v", err)
 	}
+
+	// Jalankan SendWelcomeEmail dengan goroutine agar tidak blocking
+	// dan response cepat
+	go func() {
+		if err := s.emailService.SendWelcomeEmail(fullUser); err != nil {
+			log.Printf("Failed to send welcome email to %s: %v", fullUser.Email, err)
+		} else {
+			log.Printf("Welcome email sent to: %s", fullUser.Email)
+		}
+	}()
 
 	return fullUser, nil
 }
